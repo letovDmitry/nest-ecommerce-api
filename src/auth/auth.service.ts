@@ -1,17 +1,18 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
-import { AuthDto } from "./dto";
+import { SignupDto } from "./dto";
 import * as argon from 'argon2'
 import { JwtService } from '@nestjs/jwt';
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 import { ForbiddenException } from "@nestjs/common/exceptions";
 import { ConfigService } from "@nestjs/config";
+import { SigninDto } from "./dto/signin.dto";
 
 @Injectable()
 export class AuthService {
     constructor(private prisma: PrismaService, private jwt: JwtService, private config: ConfigService) {}
 
-    async signup(dto: AuthDto) {
+    async signup(dto: SignupDto) {
         const hash = await argon.hash(dto.password)
 
         try {
@@ -19,6 +20,57 @@ export class AuthService {
                 data: {
                     email: dto.email,
                     hash,
+                    phoneNumber: dto.phoneNumber,
+                    firstName: dto.firstName,
+                    lastName: dto.lastName,
+                    city: dto.city,
+                    pointOfIssue: dto.pointOfIssue,
+                    role: false
+                }
+            })
+            const basket = await this.prisma.basket.create({
+                data: {
+                    userId: user.id,
+                }
+            })
+            const favourites = await this.prisma.favourites.create({
+                data: {
+                    userId: user.id,
+                }
+            })
+            
+            return this.signToken(user.id, user.email)
+        } catch (e) {
+            if (e instanceof PrismaClientKnownRequestError) {
+                if (e.code === 'P2002') throw new ForbiddenException('Credentials taken')
+            }
+        }
+    }
+
+    async signupAdmin(dto: SignupDto) {
+        const hash = await argon.hash(dto.password)
+
+        try {
+            const user = await this.prisma.user.create({
+                data: {
+                    email: dto.email,
+                    hash,
+                    phoneNumber: dto.phoneNumber,
+                    firstName: dto.firstName,
+                    lastName: dto.lastName,
+                    city: dto.city,
+                    pointOfIssue: dto.pointOfIssue,
+                    role: true
+                }
+            })
+            const basket = await this.prisma.basket.create({
+                data: {
+                    userId: user.id
+                }
+            })
+            const favourites = await this.prisma.favourites.create({
+                data: {
+                    userId: user.id,
                 }
             })
     
@@ -30,7 +82,7 @@ export class AuthService {
         }
     }
 
-    async signin(dto: AuthDto) {
+    async signin(dto: SigninDto) {
         const user = await this.prisma.user.findUnique({
             where: {
                 email: dto.email
