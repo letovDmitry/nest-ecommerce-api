@@ -17,9 +17,9 @@ export class CreateItemDto {
     @IsNotEmpty()
     sizes: string[]
 
-    @IsBoolean()
+    @IsString()
     @IsNotEmpty()
-    sex: boolean
+    sex: string
 
     @IsOptional()
     @IsString()
@@ -40,6 +40,10 @@ export class CreateItemDto {
     @IsOptional()
     @IsString()
     img: string
+
+    @IsNotEmpty()
+    @IsNumber()
+    inStock: number
 
 
 }

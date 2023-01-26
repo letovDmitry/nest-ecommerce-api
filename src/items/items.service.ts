@@ -6,10 +6,15 @@ import { CreateItemDto, EditItemDto } from './dto';
 export class ItemsService {
     constructor(private prisma: PrismaService) {}
     
-    async getItems(page: number) {
+    async getItems(queryParams) {
+        const { page = 1, brand, sex } = queryParams
         const items = await this.prisma.item.findMany({
-            skip: (page-1)*20,
-            take: 20
+            skip: (parseInt(page)-1)*20,
+            take: 20,
+            where: {
+                brandName: brand ? brand : {},
+                sex: sex ? sex : {}
+            }
         })
         for (let i of items) {
             delete i.createdAt
@@ -35,12 +40,22 @@ export class ItemsService {
 
         return await this.prisma.item.create({
             data: {
-                ...dto
+                ...dto,
+                brand: {
+                    connectOrCreate: {
+                        where: {
+                            name: dto.brand
+                        },
+                        create: {
+                            name: dto.brand
+                        }
+                    }
+                }
             }
         })
     }
 
-    async editItemById(role: boolean, dto: EditItemDto, itemId: number) {
+    async editItemById(role: boolean, dto: any, itemId: number) {
         if (!role) throw new ForbiddenException()
         
         return await this.prisma.item.update({
@@ -49,7 +64,17 @@ export class ItemsService {
 
             },
             data: {
-                ...dto
+                ...dto,
+                brand: {
+                    connectOrCreate: {
+                        where: {
+                            name: dto.brand
+                        },
+                        create: {
+                            name: dto.brand
+                        }
+                    }
+                }
             }
         })
     }

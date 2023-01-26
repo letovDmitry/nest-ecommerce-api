@@ -17,9 +17,9 @@ export class EditItemDto {
     @IsOptional()
     sizes?: string[]
 
-    @IsBoolean()
+    @IsString()
     @IsOptional()
-    sex?: boolean
+    sex?: string
 
     @IsOptional()
     @IsString()
@@ -41,5 +41,8 @@ export class EditItemDto {
     @IsString()
     img?: string
 
+    @IsOptional()
+    @IsNumber()
+    inStock?: number
 
 }

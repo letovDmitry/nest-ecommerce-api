@@ -45,8 +45,8 @@ export class ItemsController {
 
 
   @Get()
-  getItems(@Query('page') page: string) {
-    return this.itemsService.getItems(page ? parseInt(page) : 1)
+  getItems(@Query() queryParams) {
+    return this.itemsService.getItems(queryParams)
   }
 
   @Get(':id')
