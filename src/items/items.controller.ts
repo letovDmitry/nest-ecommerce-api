@@ -1,5 +1,6 @@
 import { Controller, Get, UseGuards, Param, ParseIntPipe, Query, Post, Patch, Delete, Body } from '@nestjs/common';
 import { GetUser } from 'src/auth/decorator';
+import { BypassAuth } from 'src/auth/decorator/bypassAuth.decorator';
 import { JwtGuard } from 'src/auth/guard';
 import { CreateItemDto, EditItemDto } from './dto';
 import { ItemsService } from './items.service';
@@ -43,7 +44,7 @@ export class ItemsController {
   
 
 
-
+  @BypassAuth()
   @Get()
   getItems(@Query() queryParams) {
     return this.itemsService.getItems(queryParams)

@@ -72,7 +72,7 @@ POST
 }
 ```
 POST
-/auth/signup-admin
+/auth/signup-admin sign up for admin role
 
 ## Body
 
@@ -104,7 +104,7 @@ POST
 
 # Items
 GET
-/items?params
+/items?params get all items
 
 params: page, brand, sex
 
@@ -115,7 +115,7 @@ params: page, brand, sex
 ```
 
 GET
-/items/:id
+/items/:id get an item specified by id
 
 ## Returns
 
@@ -146,7 +146,7 @@ GET
 ```
 
 POST
-/items
+/items create item for admin
 
 ## Body
 
@@ -206,7 +206,7 @@ POST
 ```
 
 PATCH
-/items
+/items/:id update item specified by id for admin
 
 ## Body
 
@@ -266,11 +266,11 @@ PATCH
 ```
 
 DELETE
-/items/:id
+/items/:id delete item specified by id for admin
 
 # Favourites
 GET
-/items/favourites
+/items/favourites get favourites of user
 
 ## Returns 
 
