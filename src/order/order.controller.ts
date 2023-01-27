@@ -12,6 +12,11 @@ import { OrderService } from './order.service';
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
+  @Get('cities')
+  async getCities() {
+    return await this.orderService.getCities()
+  }
+
   @Get('all')
   getAllOrders(@GetUser('role') role: boolean) {
     return this.orderService.getAllOrders(role)

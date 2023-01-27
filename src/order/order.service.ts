@@ -2,6 +2,7 @@ import { Injectable, ForbiddenException } from '@nestjs/common';
 import { PaymentService } from 'src/payment/payment.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateOrderDto } from './dto';
+import axios from 'axios'
 
 @Injectable()
 export class OrderService {
@@ -74,5 +75,15 @@ export class OrderService {
                 status: updatedStatus
             }
         })
+    }
+
+    async getCities() {
+        const { data: token } = await axios.post(`https://api.edu.cdek.ru/v2/oauth/token?grant_type=client_credentials&client_id=${process.env.ACCOUNT}&client_secret=${process.env.SECURE_PASSWORD}`)
+        const { data: citiesList } = await axios.get(`https://api.cdek.ru/v2/location/cities`, { headers: {'Authorization': `Bearer ${token.access_token}`} })
+        console.log(token)
+        console.log(citiesList)
+        console.log(process.env.ACCOUNT)
+        console.log(process.env.SECURE_PASSWORD)
+        return citiesList
     }
 }
