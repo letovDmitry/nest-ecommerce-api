@@ -38,8 +38,8 @@ export class CreateItemDto {
     type: string
 
     @IsOptional()
-    @IsString()
-    img: string
+    @IsArray()
+    img?: string[]
 
     @IsNotEmpty()
     @IsNumber()

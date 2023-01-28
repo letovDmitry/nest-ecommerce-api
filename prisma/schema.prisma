@@ -61,7 +61,7 @@ model Item {
   sex String
   publicationDate DateTime @default(now())
 
-  img String
+  img String[]
 
   brand Brand @relation(fields: [brandName], references: [name])
   brandName String

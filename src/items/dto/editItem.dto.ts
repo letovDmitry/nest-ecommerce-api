@@ -38,8 +38,8 @@ export class EditItemDto {
     type?: string
 
     @IsOptional()
-    @IsString()
-    img?: string
+    @IsArray()
+    img?: string[]
 
     @IsOptional()
     @IsNumber()
