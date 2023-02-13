@@ -112,7 +112,7 @@ export class ItemsService {
                 userId
             },
             data: {
-                size,
+                sizes,
                 items: {
                     connect: {
                         id: itemId
