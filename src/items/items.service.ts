@@ -75,7 +75,7 @@ export class ItemsService {
                                 name: dto.brand
                             }
                         }
-                    } : 
+                    }
                 }
             })
         } else {
