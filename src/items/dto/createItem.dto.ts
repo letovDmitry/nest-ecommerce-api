@@ -23,7 +23,7 @@ export class CreateItemDto {
 
     @IsOptional()
     @IsString()
-    description?: string
+    desc?: string
 
     @IsNotEmpty()
     @IsString()
