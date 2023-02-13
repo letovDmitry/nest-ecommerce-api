@@ -57,26 +57,40 @@ export class ItemsService {
 
     async editItemById(role: boolean, dto: any, itemId: number) {
         if (!role) throw new ForbiddenException()
-        
-        return await this.prisma.item.update({
-            where: {
-                id: itemId,
 
-            },
-            data: {
-                ...dto,
-                brand: {
-                    connectOrCreate: {
-                        where: {
-                            name: dto.brand
-                        },
-                        create: {
-                            name: dto.brand
+        if (dto.brand) {
+            return await this.prisma.item.update({
+                where: {
+                    id: itemId,
+    
+                },
+                data: {
+                    ...dto,
+                    brand: {
+                        connectOrCreate: {
+                            where: {
+                                name: dto.brand
+                            },
+                            create: {
+                                name: dto.brand
+                            }
                         }
-                    }
+                    } : 
                 }
-            }
-        })
+            })
+        } else {
+            return await this.prisma.item.update({
+                where: {
+                    id: itemId,
+    
+                },
+                data: {
+                    ...dto,
+                }
+            })
+        }
+        
+        
     }
 
     async deleteItemById(role: boolean, itemId: number) {
