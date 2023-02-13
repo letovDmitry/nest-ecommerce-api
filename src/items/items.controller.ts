@@ -11,8 +11,8 @@ export class ItemsController {
   constructor(private readonly itemsService: ItemsService) {}
 
   @Post('/basket')
-  addToBasket(@GetUser('id', ParseIntPipe) userId: number, @Body() dto: { id: number }) {
-      return this.itemsService.addToBasket(userId, dto.id)
+  addToBasket(@GetUser('id', ParseIntPipe) userId: number, @Body() dto: { id: number, size: string }) {
+      return this.itemsService.addToBasket(userId, dto.id, dto.size)
   }
 
   @Get('/basket')

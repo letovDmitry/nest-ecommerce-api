@@ -10,6 +10,10 @@ export class EditItemDto {
     price?: number
 
     @IsOptional()
+    @IsString()
+    art?: string
+
+    @IsOptional()
     @IsNumber()
     sale?: number
 
