@@ -106,13 +106,15 @@ export class ItemsService {
 
 
 
-    async addToBasket(userId, itemId, sizes) {
+    async addToBasket(userId, itemId, size) {
         const updatedBasket = await this.prisma.basket.update({
             where: {
                 userId
             },
             data: {
-                sizes,
+                sizes: {
+                    push: size
+                },
                 items: {
                     connect: {
                         id: itemId
