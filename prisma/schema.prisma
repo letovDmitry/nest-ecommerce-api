@@ -39,7 +39,7 @@ model Basket {
   user   User @relation(fields: [userId], references: [id])
   userId Int  @unique
 
-  sizes String?
+  sizes String[]
 
   items Item[]
 
