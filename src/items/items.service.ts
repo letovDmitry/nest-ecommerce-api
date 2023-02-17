@@ -106,7 +106,7 @@ export class ItemsService {
 
 
 
-    async addToBasket(userId, itemId, size) {
+    async addToBasket(userId, itemId, sizes) {
         const item = await this.prisma.item.findUnique({
             where: {
                 id: itemId
@@ -121,7 +121,7 @@ export class ItemsService {
                 art: item.art,
                 price: item.price,
                 sale: item.sale,
-                size,
+                sizes,
                 sex: item.sex,
                 img: item.img,
                 color: item.color,

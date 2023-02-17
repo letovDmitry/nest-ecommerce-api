@@ -59,7 +59,7 @@ model BasketItem {
   price Int
   sale Int?
 
-  size String
+  sizes String[]
 
   sex String
   publicationDate DateTime @default(now())
