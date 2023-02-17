@@ -186,7 +186,7 @@ export class ItemsService {
             }
         })
 
-        return basket.items
+        return basket
     }
 
 
