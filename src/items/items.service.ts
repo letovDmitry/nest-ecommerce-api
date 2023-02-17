@@ -107,17 +107,38 @@ export class ItemsService {
 
 
     async addToBasket(userId, itemId, size) {
+        const item = await this.prisma.item.findUnique({
+            where: {
+                id: itemId
+            }
+        })
+
+        const basketItem = await this.prisma.basketItem.create({
+            data: {
+                name: item.name,
+                desc: item.desc,
+                inStock: item.inStock,
+                art: item.art,
+                price: item.price,
+                sale: item.sale,
+                size,
+                sex: item.sex,
+                img: item.img,
+                color: item.color,
+                type: item.type,
+                brandName: item.brandName,
+                id: item.id
+            }
+        })
+
         const updatedBasket = await this.prisma.basket.update({
             where: {
                 userId
             },
             data: {
-                sizes: {
-                    push: size
-                },
                 items: {
                     connect: {
-                        id: itemId
+                        id: basketItem.id
                     }
                 }
             },
@@ -144,7 +165,13 @@ export class ItemsService {
             include: {
                 items: true
             }
-          })
+        })
+
+        await this.prisma.basketItem.delete({
+            where: {
+                id: itemId
+            }
+        })
 
         return updatedBasket
     }

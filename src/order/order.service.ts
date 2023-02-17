@@ -55,6 +55,11 @@ export class OrderService {
                 userId,
                 status: "В ожидании оплаты",
                 orderId: payment.id,
+                city: dto.city,
+                pointOfIssue: dto.poinOfIssue,
+                email: dto.email,
+                phone: dto.phone,
+                name: dto.name,
                 items: {
                     connect: itemsList
                 }

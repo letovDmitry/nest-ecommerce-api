@@ -39,11 +39,42 @@ model Basket {
   user   User @relation(fields: [userId], references: [id])
   userId Int  @unique
 
-  sizes String[]
-
-  items Item[]
+  items BasketItem[]
 
   @@map("baskets")
+}
+
+model BasketItem {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  baseItem Int @default(autoincrement())
+
+  name String
+  desc String?
+  inStock Int
+  art String?
+
+  price Int
+  sale Int?
+
+  size String
+
+  sex String
+  publicationDate DateTime @default(now())
+
+  img String[]
+
+  brandName String
+
+  color String
+  type String
+
+  baskets Basket[]
+  orders Order[]
+
+  @@map("basketItems")
 }
 
 model Item {
@@ -72,9 +103,7 @@ model Item {
   color String
   type String
 
-  baskets Basket[]
   favourites Favourites[]
-  orders Order[]
 
   @@map("items")
 }
@@ -112,6 +141,12 @@ model Order {
 
   orderId String @unique
   status String
+  city String
+  pointOfIssue String
 
-  items Item[]
+  email String
+  phone String
+  name String
+
+  items BasketItem[]
 }
