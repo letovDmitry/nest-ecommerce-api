@@ -127,7 +127,7 @@ export class ItemsService {
                 color: item.color,
                 type: item.type,
                 brandName: item.brandName,
-                id: item.id
+                baseItem: item.id
             }
         })
 
@@ -151,6 +151,12 @@ export class ItemsService {
     }
 
     async deleteFromBasket(userId, itemId) {
+        const item = await this.prisma.basketItem.findFirst({
+            where: {
+                baseItem: itemId
+            }
+        })
+
         const updatedBasket = await this.prisma.basket.update({
             where: {
                 userId
@@ -158,7 +164,7 @@ export class ItemsService {
             data: {
               items: {
                 disconnect: {
-                    id: itemId
+                    id: item.id
                 }
               }
             },
