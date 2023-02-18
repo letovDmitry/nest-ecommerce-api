@@ -106,7 +106,7 @@ export class ItemsService {
 
 
 
-    async addToBasket(userId, itemId, sizes) {
+    async addToBasket(userId, itemId, sizes: string[]) {
         const item = await this.prisma.item.findUnique({
             where: {
                 id: itemId
