@@ -32,7 +32,7 @@ export class OrderService {
     async createOrder(userId: number, dto: CreateOrderDto) {
         const itemsList = dto.itemsIds.map(i => ({id: i}))
 
-        const items = await this.prisma.item.findMany({
+        const items = await this.prisma.basketItem.findMany({
             where: {
                 OR: itemsList
             }
