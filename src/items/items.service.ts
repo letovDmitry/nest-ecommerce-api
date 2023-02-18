@@ -151,12 +151,6 @@ export class ItemsService {
     }
 
     async deleteFromBasket(userId, itemId) {
-        const item = await this.prisma.basketItem.findFirst({
-            where: {
-                baseItem: itemId
-            }
-        })
-
         const updatedBasket = await this.prisma.basket.update({
             where: {
                 userId
@@ -164,7 +158,7 @@ export class ItemsService {
             data: {
               items: {
                 disconnect: {
-                    id: item.id
+                    id: itemId
                 }
               }
             },
