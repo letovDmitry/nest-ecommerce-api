@@ -16,14 +16,6 @@ export class ItemsService {
                 sex: sex ? sex : {}
             }
         })
-        for (let i of items) {
-            delete i.createdAt
-            delete i.publicationDate
-            delete i.updatedAt
-            delete i.sizes
-            delete i.sex
-        }
-
         return items
     }
 
