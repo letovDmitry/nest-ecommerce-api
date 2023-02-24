@@ -42,7 +42,7 @@ export class OrderService {
 
         for (let i of items) {
             if (i.sale) {
-                amount+=i.sale
+                amount+=i.price - i.price*(i.sale/100)
             } else {
                 amount+=i.price
             }

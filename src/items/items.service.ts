@@ -167,11 +167,11 @@ export class ItemsService {
             }
         })
 
-        await this.prisma.basketItem.delete({
-            where: {
-                id: itemId
-            }
-        })
+        // await this.prisma.basketItem.delete({
+        //     where: {
+        //         id: itemId
+        //     }
+        // })
 
         return updatedBasket
     }
