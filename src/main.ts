@@ -13,7 +13,7 @@ async function bootstrap(): Promise<void> {
     httpsOptions,
   });
   app.enableCors();
-  await app.listen(3000);
+  await app.listen(443);
   
 }
 bootstrap();
