@@ -41,12 +41,19 @@ export class ItemsController {
   deleteFromFavourites(@GetUser('id', ParseIntPipe) userId: number, @Body() dto: { id: number }) {
     return this.itemsService.deleteFromFavourites(userId, dto.id)
   }
-
+  
+  @BypassAuth()
+  @Get('/full')
+  getFullItems() {
+    return this.itemsService.getFullItems()
+  }
+  
   @BypassAuth()
   @Get()
   getItems(@Query() queryParams) {
     return this.itemsService.getItems(queryParams)
   }
+
 
   @BypassAuth()
   @Get(':id')

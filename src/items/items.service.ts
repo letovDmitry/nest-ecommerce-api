@@ -5,6 +5,12 @@ import { CreateItemDto, EditItemDto } from './dto';
 @Injectable()
 export class ItemsService {
     constructor(private prisma: PrismaService) {}
+
+    async getFullItems() {
+        const items = await this.prisma.item.findMany()
+
+        return items
+    }
     
     async getItems(queryParams) {
         const { page = 1, brand, sex } = queryParams
