@@ -6,8 +6,13 @@ import { CreateItemDto, EditItemDto } from './dto';
 export class ItemsService {
     constructor(private prisma: PrismaService) {}
 
-    async getFullItems() {
-        const items = await this.prisma.item.findMany()
+    async getFullItems(queryParams) {
+        const { sex } = queryParams
+        const items = await this.prisma.item.findMany({
+            where: {
+                sex: sex ? sex : {}
+            }
+        })
 
         return items
     }

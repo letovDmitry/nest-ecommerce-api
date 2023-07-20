@@ -44,8 +44,8 @@ export class ItemsController {
   
   @BypassAuth()
   @Get('/full')
-  getFullItems() {
-    return this.itemsService.getFullItems()
+  getFullItems(@Query() queryParams) {
+    return this.itemsService.getFullItems(queryParams)
   }
   
   @BypassAuth()
